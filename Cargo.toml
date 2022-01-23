@@ -1,0 +1,12 @@
+[package]
+name = "distr"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "distr - A Web Server to replace nginx/Caddy (for myself)."
+documentation = "https://docs.rs/distr/0.1.0"
+repository = "https://github.com/coca-labs/distr"
+keywords = ["distr", "web", "server", "nginx", "caddy", "auto", "https"]
+
+
+[dependencies]
