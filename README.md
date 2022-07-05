@@ -1,6 +1,6 @@
 # distr
 
-distr - A Web Server to replace nginx/Caddy (for myself).
+distr - A Web Server with simplicity.
 
 ## Features
 
