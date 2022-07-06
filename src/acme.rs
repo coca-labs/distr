@@ -1,16 +1,18 @@
 use acme_micro::create_p384_key;
 use acme_micro::{Certificate, Directory, DirectoryUrl, Error};
+use std::fs::File;
+use std::io::prelude::*;
 use std::time::Duration;
 use serde::{Serialize, Deserialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct AcmeInfo {
-    pub email: String,
     pub domain: String,
+    pub email: String,
     pub web_root: String,
 }
 
-fn request_cert(info: &AcmeInfo) -> Result<Certificate, Error> {
+pub fn request_cert(info: &AcmeInfo) -> Result<Certificate, Error> {
     // Use DirectoryUrl::LetsEncrypStaging for dev/testing.
     let url = DirectoryUrl::LetsEncrypt;
 
@@ -58,14 +60,23 @@ fn request_cert(info: &AcmeInfo) -> Result<Certificate, Error> {
 
         // The token is the filename.
         let token = chall.http_token();
-        let path = format!(".well-known/acme-challenge/{}", token);
+        let dir = format!("{}/.well-known/acme-challenge", info.web_root);
+        let path = format!("{}/.well-known/acme-challenge/{}", info.web_root, token);
 
         // The proof is the contents of the file
         let proof = chall.http_proof()?;
-
+    
         // Here you must do "something" to place
         // the file/contents in the correct place.
         // update_my_web_server(&path, &proof);
+        {
+            println!("{}", path);
+            std::fs::create_dir_all(&dir)?;
+            let mut file = File::create(&path)?;
+            println!("{:?}", file);
+            file.write_all(proof.as_bytes())?;
+            file.sync_all()?;
+        }
 
         // After the file is accessible from the web, the calls
         // this to tell the ACME API to start checking the
