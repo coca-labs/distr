@@ -1,10 +1,11 @@
-use acme_micro::create_p384_key;
-use acme_micro::{Certificate, Directory, DirectoryUrl, Error};
+// use acme_micro::create_p384_key;
+// use acme_micro::{Certificate, Directory, DirectoryUrl, Error};
+use acme_micro::Certificate;
 use std::fs::File;
 use std::io::prelude::*;
-use std::time::Duration;
+// use std::time::Duration;
 // use anyhow::Result;
-use serde::{Serialize, Deserialize};
+// use serde::{Serialize, Deserialize};
 
 pub fn test_domain_exists(domain: &str) -> std::io::Result<bool>  {
     let path = format!("./cert/{}.key", domain);
