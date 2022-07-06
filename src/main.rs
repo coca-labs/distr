@@ -20,31 +20,43 @@ async fn main() -> std::io::Result<()> {
     }
     println!("{:?}", args);
 
-    let domain = &args[1];
-    let email = &args[2];
+    let domain = args[1].clone();
+    let email = args[2].clone();
 
-    let exists = cert::test_domain_exists(domain)?;
-    println!("exists: {}", exists);
-
-    if !exists {
-        println!("Request cert...");
-        let res = acme::request_cert(&acme::AcmeInfo{
-            domain: domain.to_owned(),
-            email: email.to_owned(),
-            web_root: "./static".to_owned(),
-        });
-
-        let crt = match res {
-            Ok(crt) => crt,
+    ntex::rt::spawn(async move {
+        let res = cert::test_domain_exists(&domain);
+        let exists = match res {
+            Ok(e) => e,
             Err(err) => {
                 println!("{}", err);
-                process::exit(0x0100);
+                return;
             }
         };
-
-        cert::create_cert_file(domain, &crt)?;
-        println!("Cert saved.");
-    }
+        println!("exists: {}", exists);
+    
+        if !exists {
+            println!("Request cert...");
+            let res = acme::request_cert(&acme::AcmeInfo{
+                domain: domain.to_owned(),
+                email: email.to_owned(),
+                web_root: "./static".to_owned(),
+            });
+    
+            match res {
+                Ok(crt) => {
+                    match cert::create_cert_file(&domain, &crt) {
+                        Ok(_) => println!("Cert saved."),
+                        Err(err) => println!("{}", err),
+                    }
+                    
+                }
+                Err(err) => {
+                    println!("{}", err);
+                    // process::exit(0x0100);
+                }
+            }    
+        }
+    });
 
     web::server(|| {
         App::new()
