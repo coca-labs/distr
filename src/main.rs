@@ -32,6 +32,7 @@ async fn main() -> std::io::Result<()> {
         Ok(e) => e,
         Err(err) => {
             println!("{}", err);
+            false
         }
     };
     println!("exists: {}", exists);
