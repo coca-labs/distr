@@ -58,9 +58,11 @@ pub fn request_cert(info: &AcmeInfo) -> Result<Certificate, Error> {
         // http://mydomain.io/.well-known/acme-challenge/<token>
         let chall = auths[0].http_challenge().unwrap();
 
+        let dir = format!("{}/.well-known/acme-challenge", info.web_root);
+        std::fs::create_dir_all(&dir)?;
+
         // The token is the filename.
         let token = chall.http_token();
-        let dir = format!("{}/.well-known/acme-challenge", info.web_root);
         let path = format!("{}/.well-known/acme-challenge/{}", info.web_root, token);
 
         // The proof is the contents of the file
@@ -71,7 +73,6 @@ pub fn request_cert(info: &AcmeInfo) -> Result<Certificate, Error> {
         // update_my_web_server(&path, &proof);
         {
             println!("{}", path);
-            std::fs::create_dir_all(&dir)?;
             let mut file = File::create(&path)?;
             println!("{:?}", file);
             file.write_all(proof.as_bytes())?;
