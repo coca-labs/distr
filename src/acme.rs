@@ -1,4 +1,4 @@
-use acme_micro::create_p384_key;
+use acme_micro::create_rsa_key;
 use acme_micro::{Certificate, Directory, DirectoryUrl, Error};
 use std::fs::File;
 use std::io::prelude::*;
@@ -95,7 +95,7 @@ pub fn request_cert(info: &AcmeInfo) -> Result<Certificate, Error> {
     // Ownership is proven. Create a private key for
     // the certificate. These are provided for convenience, you
     // can provide your own keypair instead if you want.
-    let pkey_pri = create_p384_key()?;
+    let pkey_pri = create_rsa_key(2048)?;
 
     // Submit the CSR. This causes the ACME provider to enter a
     // state of "processing" that must be polled until the
