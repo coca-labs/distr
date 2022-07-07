@@ -8,8 +8,9 @@ use std::process;
 
 use ntex::web::{self, middleware, App};
 use ntex_files as fs;
-use rustls::{Certificate, PrivateKey, ServerConfig};
-use rustls_pemfile::{certs, rsa_private_keys};
+use openssl::ssl::{SslAcceptor, SslFiletype, SslMethod};
+// use rustls::{Certificate, PrivateKey, ServerConfig};
+// use rustls_pemfile::{certs, rsa_private_keys};
 
 #[ntex::main]
 async fn main() -> std::io::Result<()> {
@@ -70,24 +71,32 @@ async fn main() -> std::io::Result<()> {
         .run()
         .await
     } else {
-        // load ssl keys
         let key_path = format!("./cert/{}.key", domain);
         let cert_path = format!("./cert/{}.pem", domain);
-        let key_file = &mut BufReader::new(File::open(&key_path).unwrap());
-        println!("{:?}", key_file);
-        println!("{:?}", rsa_private_keys(key_file));
-        let key = PrivateKey(rsa_private_keys(key_file).unwrap().remove(0));
-        let cert_file = &mut BufReader::new(File::open(&cert_path).unwrap());
-        let cert_chain = certs(cert_file)
-            .unwrap()
-            .iter()
-            .map(|c| Certificate(c.to_vec()))
-            .collect();
-        let config = ServerConfig::builder()
-            .with_safe_defaults()
-            .with_no_client_auth()
-            .with_single_cert(cert_chain, key)
+
+        // load ssl keys
+        let mut builder = SslAcceptor::mozilla_intermediate(SslMethod::tls()).unwrap();
+        builder
+            .set_private_key_file(&key_path, SslFiletype::PEM)
             .unwrap();
+        builder.set_certificate_chain_file(&cert_path).unwrap();
+
+        // // load ssl keys
+        // let key_file = &mut BufReader::new(File::open(&key_path).unwrap());
+        // println!("{:?}", key_file);
+        // println!("{:?}", rsa_private_keys(key_file));
+        // let key = PrivateKey(rsa_private_keys(key_file).unwrap().remove(0));
+        // let cert_file = &mut BufReader::new(File::open(&cert_path).unwrap());
+        // let cert_chain = certs(cert_file)
+        //     .unwrap()
+        //     .iter()
+        //     .map(|c| Certificate(c.to_vec()))
+        //     .collect();
+        // let config = ServerConfig::builder()
+        //     .with_safe_defaults()
+        //     .with_no_client_auth()
+        //     .with_single_cert(cert_chain, key)
+        //     .unwrap();
 
         web::server(|| {
             App::new()
@@ -99,7 +108,7 @@ async fn main() -> std::io::Result<()> {
                 )
         })
         .bind("0.0.0.0:80")?
-        .bind_rustls("0.0.0.0:443", config)?
+        .bind_openssl("0.0.0.0:443", builder)?
         .run()
         .await
     }
