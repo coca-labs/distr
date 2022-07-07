@@ -2,8 +2,8 @@ mod acme;
 mod cert;
 
 use std::env;
-use std::fs::File;
-use std::io::BufReader;
+// use std::fs::File;
+// use std::io::BufReader;
 use std::process;
 
 use ntex::web::{self, middleware, App};
