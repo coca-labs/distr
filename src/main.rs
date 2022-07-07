@@ -75,6 +75,7 @@ async fn main() -> std::io::Result<()> {
         let cert_path = format!("./cert/{}.pem", domain);
         let key_file = &mut BufReader::new(File::open(&key_path).unwrap());
         println!("{:?}", key_file);
+        println!("{:?}", rsa_private_keys(key_file));
         let key = PrivateKey(rsa_private_keys(key_file).unwrap().remove(0));
         let cert_file = &mut BufReader::new(File::open(&cert_path).unwrap());
         let cert_chain = certs(cert_file)
