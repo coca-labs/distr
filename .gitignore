@@ -14,4 +14,3 @@ Cargo.lock
 
 /target
 /static/.well-known
-/cert/*
