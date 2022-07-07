@@ -22,6 +22,9 @@ pub fn test_domain_exists(domain: &str) -> std::io::Result<bool>  {
 }
 
 pub fn create_cert_file(domain: &str, cert: &Certificate) -> std::io::Result<()> {
+    let dir = format!("./cert");
+    std::fs::create_dir_all(&dir)?;
+
     let path = format!("./cert/{}.key", domain);
     println!("{}", path);
 
