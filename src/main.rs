@@ -14,7 +14,7 @@ use openssl::ssl::{SslAcceptor, SslFiletype, SslMethod};
 
 #[ntex::main]
 async fn main() -> std::io::Result<()> {
-    std::env::set_var("RUST_LOG", "ntex=info");
+    std::env::set_var("RUST_LOG", "ntex=trace");
     env_logger::init();
 
     let args: Vec<String> = env::args().collect();
