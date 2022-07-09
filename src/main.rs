@@ -104,8 +104,8 @@ async fn main() -> std::io::Result<()> {
                 .wrap(middleware::Logger::default())
                 .service(
                     // static files
-                    // fs::Files::new("/", "./static/").index_file("index.html"),
-                    web::resource("/").to(|| async { "Hello world! Powered by distr." }),
+                    fs::Files::new("/", "./html/").index_file("index.html"),
+                    // web::resource("/").to(|| async { "Hello world! Powered by distr." }),
                 )
         })
         .bind("0.0.0.0:80")?
