@@ -12,3 +12,5 @@ distr - A Web Server with simplicity.
 
 * [https://clia.tech](https://clia.tech)
 * [https://bailog.cn](https://bailog.cn)
+* [https://flowchunks.com](https://flowchunks.com)
+* [https://polymer-zh.cn](https://polymer-zh.cn)
