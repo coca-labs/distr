@@ -18,7 +18,7 @@ async fn main() -> std::io::Result<()> {
     std::env::set_var("RUST_LOG", "ntex=trace");
     env_logger::init();
 
-    nginx::read_config();
+    // nginx::read_config();
 
     let args: Vec<String> = env::args().collect();
 
