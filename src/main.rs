@@ -87,7 +87,7 @@ async fn main() -> std::io::Result<()> {
         // load ssl keys
         let key_file = &mut BufReader::new(File::open(&key_path).unwrap());
         println!("{:?}", key_file);
-        println!("{:?}", pkcs8_private_keys(key_file));
+        // println!("{:?}", pkcs8_private_keys(key_file));
         let key = PrivateKey(pkcs8_private_keys(key_file).unwrap().remove(0));
         let cert_file = &mut BufReader::new(File::open(&cert_path).unwrap());
         let cert_chain = certs(cert_file)
