@@ -7,3 +7,8 @@ distr - A Web Server with simplicity.
 1. It can retrieve HTTPS certificates from Let's Encrypt automatically.
 1. It is configurable, using nginx's config file format.
 1. It is extensible, naturally.
+
+## Some websites running distr
+
+* [https://clia.tech](https://clia.tech)
+* [https://bailog.cn](https://bailog.cn)
