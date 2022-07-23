@@ -1,6 +1,6 @@
-mod acme;
-mod cert;
-mod nginx;
+pub mod acme;
+pub mod cert;
+pub mod nginx;
 
 use std::env;
 use std::fs::File;
@@ -13,8 +13,7 @@ use ntex_files as fs;
 use rustls::{Certificate, PrivateKey, ServerConfig};
 use rustls_pemfile::{certs, pkcs8_private_keys};
 
-#[ntex::main]
-async fn main() -> std::io::Result<()> {
+pub async fn start() -> std::io::Result<()> {
     std::env::set_var("RUST_LOG", "ntex=trace");
     env_logger::init();
 

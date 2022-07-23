@@ -10,12 +10,20 @@ repository = "https://github.com/coca-labs/distr"
 keywords = ["distr", "web", "server", "nginx", "caddy", "auto", "https"]
 
 
+[[bin]]
+name = "distr"
+path = "bin/distr.rs"
+
+[lib]
+name = "libdistr"
+path = "src/lib.rs"
+
 [dependencies]
 acme-micro = "0.12.0"
 env_logger = "0.9"
 futures = "0.3"
 nginx-config = "0.13.2"
-ntex = { version = "0.5", features = ["tokio", "rustls", "openssl"] }
+ntex = { version = "0.5", features = ["tokio", "rustls"] }
 ntex-files = { package = "clia-ntex-files-mod", version = "0.1" }
 ntex-session = { package = "clia-ntex-session", version = "0.1" }
 openssl = "0.10"
