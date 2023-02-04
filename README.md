@@ -1,6 +1,6 @@
 # distr
 
-distr - A Web Server with simplicity.
+A Web Server with simplicity.
 
 ## Features
 
