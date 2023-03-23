@@ -24,7 +24,7 @@ env_logger = "0.9"
 futures = "0.3"
 nginx-config = "0.13"
 ntex = { version = "0.6", features = ["tokio", "rustls"] }
-ntex-files = { package = "clia-ntex-files-mod", version = "0.1" }
+ntex-files = { package = "clia-ntex-files-mod", version = "0.2" }
 ntex-session = { package = "clia-ntex-session", version = "0.2" }
 # openssl = "0.10"
 rustls = "0.20"
