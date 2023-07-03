@@ -23,11 +23,11 @@ acme-micro = "0.12"
 env_logger = "0.9"
 futures = "0.3"
 nginx-config = "0.13"
-ntex = { version = "0.6", features = ["tokio", "rustls"] }
-ntex-files = { package = "clia-ntex-files-mod", version = "0.2" }
-ntex-session = { package = "clia-ntex-session", version = "0.2" }
+ntex = { version = "0.7", features = ["tokio", "rustls"] }
+ntex-files = { package = "clia-ntex-files-mod", version = "0.3" }
+ntex-session = { package = "clia-ntex-session", version = "0.3" }
 # openssl = "0.10"
-rustls = "0.20"
-rustls-pemfile = "0.3"
+rustls = "0.21"
+rustls-pemfile = "1"
 serde = "1"
 tokio = { version = "1", features = ["full"] }
