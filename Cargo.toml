@@ -23,7 +23,7 @@ acme-micro = "0.12"
 env_logger = "0.9"
 futures = "0.3"
 nginx-config = "0.13"
-ntex = { version = "0.7", features = ["tokio", "rustls"] }
+ntex = { version = "1.0", features = ["tokio", "rustls"] }
 ntex-files = "0.4"
 ntex-session = "0.4"
 #ntex-files = { package = "clia-ntex-files-mod", version = "0.3" }
